@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Mizzou Memes</title>
+    <meta charset="utf-8">
+    <link rel="icon" type="image/png" href="mutiger.png"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script> <!-- needed for angularjs-->
+    <link rel= "stylesheet" type= "text/css" href= "styles.css">
+    <script type="text/javascript" src="scripts.js"></script>
+
+</head>
+
+
+
+<body>
+    <h1>Meme Maker</h1>
+    <div class="column-12">
+        <form>
+            <div class="form-group text-center">
+              <select onchange="document.getElementById('memePic').src = this.value">
+                <option disabled selected value> -- Select Meme -- </option>
+                <option value="grumpy.jpg">Grumpy Cat</option>
+              </select>
+              <br>
+              <input type="text" name="topText" class="form-control input-box" placeholder="Top Text Limit 50 Characters">
+              <input type="text" name="bottomText" class="form-control input-box" placeholder="Bottom Text Limit 50 Characters">
+              <div class="input-group-btn"style="margin-top:2px;">
+                  <button id="submitButton" class="btn btn-primary" >Add Text</button>
+              </div>
+              <br>
+              <div class="input-group-btn" style="margin-top:1px;">
+                <button id="memeButton" class="btn btn-primary">Submit Meme</button>
+              </div>
+            </div>
+        </form>
+        <div id="holder" class="col-md-offset-1 col-md-8">
+          <img style="margin:center; width:500px; height:500px;" id="memePic">
+        </div>
+    </div>
+</body>
