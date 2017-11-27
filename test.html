@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Mizzou Memes</title>
+    <meta charset="utf-8">
+    <link rel="icon" type="image/png" href="mutiger.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+    <!-- needed for angularjs-->
+    <!-- <link rel="stylesheet" type="text/css" href="styles.css">
+    <script type="text/javascript" src="scripts.js"></script> -->
+
+    <style>
+        img {
+            left: -10000px;
+            top: -10000px;
+            position: absolute;
+            display: block;
+        }
+        
+        input {
+            display: block;
+        }
+        
+        body {
+            margin: 20px;
+        }
+    </style>
+
+</head>
+
+
+<body>
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <div class="page-header" onchange="onFileSelected(event)">
+                <h1>Meme Maker</h1>
+            </div>
+
+            <div class="text-center">
+                <canvas id="meme">
+                     Sorry, canvas is not supported.
+                </canvas>
+            </div>
+
+            <input class="form-control" type="file" name="myImage" accept="image/x-png,image/gif,image/jpeg" />
+
+            <div class="text-center">
+                <img class="img-responsive center-block" id="image" src="http://www.comicsandmemes.com/wp-content/uploads/2013/04/Success-baby.jpg" alt="success" />
+            </div>
+
+            <br> <input class="form-control" type="text" value="" placeholder="Top Text" id="top-input" />
+            <br>
+            <span>
+                <input class="form-control" type="text" value="" placeholder="Bottom Text" id="bottom-input" />
+            </span>
+
+            <script>
+                var memeSize = 300;
+
+                var canvas = document.getElementById('meme');
+                context = canvas.getContext('2d');
+
+                canvas.width = memeSize;
+                canvas.height = memeSize;
+
+                var img = document.getElementById('image');
+                var topInput = document.getElementById('top-input');
+                var bottomInput = document.getElementById('bottom-input');
+
+                img.onload = function() {
+                    memeify()
+                }
+
+                topInput.addEventListener('keydown', memeify);
+                topInput.addEventListener('keyup', memeify);
+                topInput.addEventListener('change', memeify);
+
+                bottomInput.addEventListener('keydown', memeify);
+                bottomInput.addEventListener('keyup', memeify);
+                bottomInput.addEventListener('change', memeify);
+
+                function onFileSelected(event) {
+                    var file = event.target.files[0];
+                    var reader = new FileReader();
+
+                    var imgtag = document.getElementById('image');
+                    imgtag.title = selectedFile.name;
+
+                    reader.onload = function(event) {
+                        imgtag.src = event.target.result;
+                    };
+
+                    reader.readAsDataURL(selectedFile);
+                }
+
+                function memeify() {
+                    context.clearRect(0, 0, canvas.wdith, canvas.height);
+                    context.drawImage(img, 0, 0, memeSize, memeSize);
+
+                    context.lineWidth = 4;
+                    context.font = '20pt sans-serif';
+                    context.strokeStyle = 'black';
+                    context.fillStyle = 'white';
+                    context.textAlign = 'center';
+                    context.textBaseline = 'top';
+
+                    var text1 = document.getElementById('top-input').value;
+                    text1 = text1.toUpperCase();
+                    x = memeSize / 2;
+                    y = 0;
+
+                    wrapText(context, text1, x, y, 300, 28, false);
+
+                    context.textBaseline = 'bottom';
+                    var text2 = document.getElementById('bottom-input').value;
+                    text2 = text2.toUpperCase();
+                    y = memeSize;
+
+                    wrapText(context, text2, x, y, 300, 28, true);
+                }
+
+                function wrapText(context, text, x, y, maxWidth, lineHeight, fromBottom) {
+
+                    var pushMethod = (fromBottom) ? 'unshift' : 'push';
+
+                    lineHeight = (fromBottom) ? -lineHeight : lineHeight;
+
+                    var lines = [];
+                    var y = y;
+                    var line = '';
+                    var words = text.split(' ');
+
+                    for (var n = 0; n < words.length; n++) {
+                        var testLine = line + ' ' + words[n];
+                        var metrics = context.measureText(testLine);
+                        var testWidth = metrics.width;
+
+                        if (testWidth > maxWidth) {
+                            lines[pushMethod](line);
+                            line = words[n] + ' ';
+                        } else {
+                            line = testLine;
+                        }
+                    }
+                    lines[pushMethod](line);
+
+                    for (var k in lines) {
+                        context.strokeText(lines[k], x, y + lineHeight * k);
+                        context.fillText(lines[k], x, y + lineHeight * k);
+                    }
+                }
+            </script>
+        </div>
+    </div>
+</body>
