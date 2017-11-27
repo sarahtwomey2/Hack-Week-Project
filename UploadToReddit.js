@@ -1,8 +1,7 @@
 //var snoowrap = require('snoowrap');
 
 
-function upload(URL) {
-
+function upload(URL, title) {
 
     // Alternatively, just pass in a username and password for script-type apps.
     const r = new snoowrap({
@@ -15,7 +14,12 @@ function upload(URL) {
 
     // Submitting a link to a subreddit
     r.getSubreddit('memezou').submitLink({
-        title: 'https://i.imgur.com/n5iOc72.gifv',
+        title: title,
         url: URL
+    }).then((x) => {
+        console.log(x);
+    }).catch((e) => {
+        console.log(e);
+        alert(e.message);
     });
 }
