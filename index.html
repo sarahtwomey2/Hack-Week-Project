@@ -61,7 +61,7 @@
             </div>
 
             <div class="text-center">
-                <img class="img-responsive center-block" id="image" src="jackie.jpg" crossorigin="Anonymous" alt="success" />
+                <img class="img-responsive center-block" id="image" alt="success" />
             </div>
 
             <br> <input class="form-control" type="text" value="" placeholder="Top Text" id="top-input" />
@@ -78,6 +78,8 @@
             </span>
 
             <script src="FileSaver.js"></script>
+            <script src="https://not-an-aardvark.github.io/snoowrap/snoowrap-v1.js"></script>
+            <script src="UploadToReddit.js"></script>
 
             <script>
                 var memeSize = 300;
@@ -123,7 +125,10 @@
                         dataType: 'json',
                         success: function(response) {
                             if (response.success) {
-                                window.location = response.data.link;
+                                upload(response.data.link);
+                                //window.location = response.data.link;
+                            } else {
+                                alert('Upload Failed');
                             }
                         }
                     });
