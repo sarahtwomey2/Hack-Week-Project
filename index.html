@@ -10,6 +10,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
     <!-- needed for angularjs-->
     <!-- <link rel="stylesheet" type="text/css" href="styles.css">
     <script type="text/javascript" src="scripts.js"></script> -->
@@ -73,7 +74,7 @@
 
             <span class="text-center">
                 <button name="Save Image" value="Save Image" class="btn btn-default" onclick="save2()">Save Image</button>
-                <button name="Upload Image" value="Upload Image" class="btn btn-default" onclick="save2()">Upload Image</button>
+                <button name="Upload Image" value="Upload Image" class="btn btn-default" onclick="uploadToImgur()">Upload Image</button>
             </span>
 
             <script src="FileSaver.js"></script>
@@ -102,6 +103,31 @@
                 bottomInput.addEventListener('keydown', memeify);
                 bottomInput.addEventListener('keyup', memeify);
                 bottomInput.addEventListener('change', memeify);
+
+                function uploadToImgur() {
+                    try {
+                        var img = document.getElementById('meme').toDataURL('image/jpeg', 0.9).split(',')[1];
+                    } catch (e) {
+                        var img = document.getElementById('meme').toDataURL().split(',')[1];
+                    }
+
+                    $.ajax({
+                        url: 'https://api.imgur.com/3/image',
+                        type: 'post',
+                        headers: {
+                            Authorization: 'Client-ID 53430f163e6983d'
+                        },
+                        data: {
+                            image: img
+                        },
+                        dataType: 'json',
+                        success: function(response) {
+                            if (response.success) {
+                                window.location = response.data.link;
+                            }
+                        }
+                    });
+                }
 
                 function save2() {
                     var canvas = document.getElementById('meme');
