@@ -16,8 +16,12 @@ function upload(URL, title) {
     r.getSubreddit('memezou').submitLink({
         title: title,
         url: URL
-    }).then((x) => {
-        console.log(x);
+    }).then((submission) => {
+        console.log(submission);
+        alert('Success!');
+        document.getElementById('redditLink').href = "https://www.reddit.com/r/memezou/new/";
+        document.getElementById('redditLink').hidden = false;
+        console.log(submission.permalink);
     }).catch((e) => {
         console.log(e);
         alert(e.message);

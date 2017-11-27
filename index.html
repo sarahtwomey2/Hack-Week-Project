@@ -82,6 +82,10 @@
                 <button name="Upload Image" value="Upload Image" class="btn btn-default" onclick="uploadToImgur()">Upload Image</button>
             </span>
 
+            <span class="text-center">
+                <h1><a hidden="true" href="" target="_blank" id="redditLink">View on Reddit</a></h1>
+            </span>
+
             <script src="FileSaver.js"></script>
             <script src="https://not-an-aardvark.github.io/snoowrap/snoowrap-v1.js"></script>
             <script src="UploadToReddit.js"></script>
@@ -130,8 +134,7 @@
                         dataType: 'json',
                         success: function(response) {
                             if (response.success) {
-                                var x = upload(response.data.link, document.getElementById('memeTitle').value);
-                                console.log(upload);
+                                upload(response.data.link, document.getElementById('memeTitle').value);
                                 //window.location = response.data.link;
                             } else {
                                 alert('Upload Failed');
