@@ -4,42 +4,184 @@
 <head>
     <title>Mizzou Memes</title>
     <meta charset="utf-8">
-    <link rel="icon" type="image/png" href="mutiger.png"/>
+    <link rel="icon" type="image/png" href="mutiger.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script> <!-- needed for angularjs-->
-    <link rel= "stylesheet" type= "text/css" href= "styles.css">
-    <script type="text/javascript" src="scripts.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+    <!-- needed for angularjs-->
+    <!-- <link rel="stylesheet" type="text/css" href="styles.css">
+    <script type="text/javascript" src="scripts.js"></script> -->
+
+    <style>
+        img {
+            left: -10000px;
+            top: -10000px;
+            position: absolute;
+            display: block;
+        }
+        
+        input {
+            display: block;
+        }
+        
+        body {
+            margin: 20px;
+        }
+        
+        canvas {
+            border: 2px solid black;
+        }
+    </style>
 
 </head>
 
 
-
 <body>
-    <h1>Meme Maker</h1>
-    <div class="column-12">
-        <form>
-            <div class="form-group text-center">
-              <select onchange="document.getElementById('memePic').src = this.value">
-                <option disabled selected value> -- Select Meme -- </option>
-                <option value="grumpy.jpg">Grumpy Cat</option>
-              </select>
-              <br>
-              <input type="text" name="topText" class="form-control input-box" placeholder="Top Text Limit 50 Characters">
-              <input type="text" name="bottomText" class="form-control input-box" placeholder="Bottom Text Limit 50 Characters">
-              <div class="input-group-btn"style="margin-top:2px;">
-                  <button id="submitButton" class="btn btn-primary" >Add Text</button>
-              </div>
-              <br>
-              <div class="input-group-btn" style="margin-top:1px;">
-                <button id="memeButton" class="btn btn-primary">Submit Meme</button>
-              </div>
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+            <div class="page-header" onchange="onFileSelected(event)">
+                <h1>Meme Maker</h1>
             </div>
-        </form>
-        <div id="holder" class="col-md-offset-1 col-md-8">
-          <img style="margin:center; width:500px; height:500px;" id="memePic">
+
+            <div class="text-center">
+                <canvas id="meme">
+                     Sorry, canvas is not supported.
+                </canvas>
+            </div>
+
+            <br>
+
+            <div class="text-center">
+                <label class="btn btn-default btn-file">
+                   <strong>Select Image</strong><input onchange="onFileSelected(event)" type="file" name="myImage" style="display: none;" accept="image/x-png,image/gif,image/jpeg" />
+                </label>
+            </div>
+
+            <div class="text-center">
+                <img class="img-responsive center-block" id="image" src="jackie.jpg" crossorigin="Anonymous" alt="success" />
+            </div>
+
+            <br> <input class="form-control" type="text" value="" placeholder="Top Text" id="top-input" />
+            <br>
+            <span>
+                <input class="form-control" type="text" value="" placeholder="Bottom Text" id="bottom-input" />
+            </span>
+
+            <br>
+
+            <span class="text-center">
+                <button name="Save Image" value="Save Image" class="btn btn-default" onclick="save2()">Save Image</button>
+                <button name="Upload Image" value="Upload Image" class="btn btn-default" onclick="save2()">Upload Image</button>
+            </span>
+
+            <script src="FileSaver.js"></script>
+
+            <script>
+                var memeSize = 300;
+
+                var canvas = document.getElementById('meme');
+                context = canvas.getContext('2d');
+
+                canvas.width = memeSize;
+                canvas.height = memeSize;
+
+                var img = document.getElementById('image');
+                var topInput = document.getElementById('top-input');
+                var bottomInput = document.getElementById('bottom-input');
+
+                img.onload = function() {
+                    memeify()
+                }
+
+                topInput.addEventListener('keydown', memeify);
+                topInput.addEventListener('keyup', memeify);
+                topInput.addEventListener('change', memeify);
+
+                bottomInput.addEventListener('keydown', memeify);
+                bottomInput.addEventListener('keyup', memeify);
+                bottomInput.addEventListener('change', memeify);
+
+                function save2() {
+                    var canvas = document.getElementById('meme');
+                    canvas.toBlob(function(blob) {
+                        saveAs(blob, "image.png");
+                    });
+                }
+
+                function onFileSelected(event) {
+                    var file = event.target.files[0];
+                    var reader = new FileReader();
+
+                    var imgtag = document.getElementById('image');
+                    imgtag.title = file.name;
+
+                    reader.onload = function(event) {
+                        imgtag.src = event.target.result;
+                    };
+
+                    reader.readAsDataURL(file);
+                    memeify();
+                }
+
+                function memeify() {
+                    context.clearRect(0, 0, canvas.wdith, canvas.height);
+                    context.drawImage(img, 0, 0, memeSize, memeSize);
+
+                    context.lineWidth = 4;
+                    context.font = '20pt sans-serif';
+                    context.strokeStyle = 'black';
+                    context.fillStyle = 'white';
+                    context.textAlign = 'center';
+                    context.textBaseline = 'top';
+
+                    var text1 = document.getElementById('top-input').value;
+                    text1 = text1.toUpperCase();
+                    x = memeSize / 2;
+                    y = 0;
+
+                    wrapText(context, text1, x, y, 300, 28, false);
+
+                    context.textBaseline = 'bottom';
+                    var text2 = document.getElementById('bottom-input').value;
+                    text2 = text2.toUpperCase();
+                    y = memeSize;
+
+                    wrapText(context, text2, x, y, 300, 28, true);
+                }
+
+                function wrapText(context, text, x, y, maxWidth, lineHeight, fromBottom) {
+
+                    var pushMethod = (fromBottom) ? 'unshift' : 'push';
+
+                    lineHeight = (fromBottom) ? -lineHeight : lineHeight;
+
+                    var lines = [];
+                    var y = y;
+                    var line = '';
+                    var words = text.split(' ');
+
+                    for (var n = 0; n < words.length; n++) {
+                        var testLine = line + ' ' + words[n];
+                        var metrics = context.measureText(testLine);
+                        var testWidth = metrics.width;
+
+                        if (testWidth > maxWidth) {
+                            lines[pushMethod](line);
+                            line = words[n] + ' ';
+                        } else {
+                            line = testLine;
+                        }
+                    }
+                    lines[pushMethod](line);
+
+                    for (var k in lines) {
+                        context.strokeText(lines[k], x, y + lineHeight * k);
+                        context.fillText(lines[k], x, y + lineHeight * k);
+                    }
+                }
+            </script>
         </div>
     </div>
 </body>
