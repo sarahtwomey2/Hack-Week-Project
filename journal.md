@@ -1,6 +1,15 @@
 # Hack Week Project
 By: Austin Hartschen, Nicolle Lenzmeier, Sarah Twomey, Thunpisit Amnuaikiatloet
- 		
+
+### What We Worked On:
+We created a website where a user can dynamically create a meme, and then download it and/or uplodat it to Reddit.
+
+### How To Use It:
+Go to http://ec2-52-91-216-30.compute-1.amazonaws.com/Hack%20Week%20Project/ and upload an image from your local computer, then add your text to the image, finally either download it or upload it to Reddit.
+
+### Background:
+We were interested in making an easy-to-use website to create memes and give the user a way to share what they created. 
+
 ### Problem: 
 When you want to upload a meme to Reddit there isn’t a straightforward way to upload a meme. Reddit has the ability to upload an image, but there isn’t a way to create an image. There are multiple websites to create a meme, but none of them have the ability to upload to Reddit. This means that you have to visit two sites to successfully get a meme posted to Reddit.
 
@@ -16,6 +25,13 @@ We have created a website that allows users to upload an image and then draw ove
 	* Reddit API
 	* Imgur API
 	
+### Who Did What:
+	* Sarah: made Subreddit, created the Reddit bot
+	* Austin: implemented Javascript to connect website to Reddit bot/Imgur account
+	* Fluke: created Imgur account and connected to Reddit bot
+	* Nicolle: designed layout and programmed front end
+
+
 ### How We Did It:
 * Creating The Meme
 To create the meme we had to have an image and a canvas. The image is uploaded by the user and then we draw the image to the canvas when the user selects an image and when the user types to the input to create the meme.
@@ -155,6 +171,15 @@ function upload(URL, title) {
     });
 }
 ```
+
+### Pointers
+* Our first idea was to create the Reddit bot using Python, but connecting a python program to a website proved to be more difficult than we were anticipating. We found that we could do the same thing using a Javascript wrapper. Tip: don't use the back-end if you don't have to.
+* Reddit does not let you post an image through a bot, so you have to create an Imgur bot that that posts the image and have the reddit bot link to that imgur post. Tip: create an imgur bot.
+* Tip: Snoowrap makes it very easy to create a Reddit bot. Use it.
+
+### What To Look For When Grading
+* posttoreddit.js is a great example of how to create a Reddit bot completely on the front-end.
+* posttoimgur.js is a great example of a imgur bot.
 
 ### Challenges
 * Creating the meme presented several challenges as we had to make sure the text wrapped around the image. As seen above we had to create a special function to combat this issue.
