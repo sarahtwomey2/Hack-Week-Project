@@ -26,10 +26,10 @@ We have created a website that allows users to upload an image and then draw ove
 	* Imgur API
 	
 ### Who Did What:
-	* Sarah: made Subreddit, created the Reddit bot
-	* Austin: implemented Javascript to connect website to Reddit bot/Imgur account
-	* Fluke: created Imgur account and connected to Reddit bot
-	* Nicolle: designed layout and programmed front end
+* Sarah: made Subreddit, created the Reddit bot
+* Austin: implemented Javascript to connect website to Reddit bot/Imgur account
+* Fluke: created Imgur account and connected to Reddit bot
+* Nicolle: designed layout and programmed front end
 
 
 ### How We Did It:
