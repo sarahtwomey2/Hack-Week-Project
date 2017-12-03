@@ -178,8 +178,8 @@ function upload(URL, title) {
 * Tip: Snoowrap makes it very easy to create a Reddit bot. Use it.
 
 ### What To Look For When Grading
-* posttoreddit.js is a great example of how to create a Reddit bot completely on the front-end.
-* posttoimgur.js is a great example of a imgur bot.
+* uploadtoreddit.js is a great example of how to create a Reddit bot completely on the front-end.
+* filesaver.js is a great example of a imgur bot.
 
 ### Challenges
 * Creating the meme presented several challenges as we had to make sure the text wrapped around the image. As seen above we had to create a special function to combat this issue.
